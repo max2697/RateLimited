@@ -3,10 +3,10 @@
 ## Option 1: Homebrew (Recommended)
 
 ```bash
-brew install --cask max2697/tap/ratelimited
+brew install --cask --no-quarantine max2697/tap/ratelimited
 ```
 
-This handles download, install, and clears the Gatekeeper quarantine flag automatically.
+`--no-quarantine` is required because the app is unsigned — without it macOS will block the app on first launch.
 
 ---
 

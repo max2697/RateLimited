@@ -18,7 +18,7 @@ Menu bar app for macOS that shows current usage limits for Claude and Codex/Open
 
 **Homebrew** (recommended):
 ```bash
-brew install --cask max2697/tap/ratelimited
+brew install --cask --no-quarantine max2697/tap/ratelimited
 ```
 
 **curl**:
