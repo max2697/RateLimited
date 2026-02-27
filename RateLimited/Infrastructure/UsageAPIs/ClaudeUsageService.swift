@@ -38,8 +38,11 @@ struct ClaudeUsageService: UsageSnapshotFetching, Sendable {
         )
     }
 
+    // swiftlint:disable:next force_unwrapping
+    private static let usageURL = URL(string: "https://api.anthropic.com/api/oauth/usage")!
+
     private func fetchUsage(usingToken token: String) async throws -> ToolUsageSnapshot {
-        var request = URLRequest(url: URL(string: "https://api.anthropic.com/api/oauth/usage")!)
+        var request = URLRequest(url: Self.usageURL)
         request.httpMethod = "GET"
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         request.setValue("oauth-2025-04-20", forHTTPHeaderField: "anthropic-beta")

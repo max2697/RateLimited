@@ -40,8 +40,11 @@ struct CodexUsageService: UsageSnapshotFetching, Sendable {
         )
     }
 
+    // swiftlint:disable:next force_unwrapping
+    private static let usageURL = URL(string: "https://chatgpt.com/backend-api/wham/usage")!
+
     private func fetchUsage(usingToken token: String) async throws -> ToolUsageSnapshot {
-        var request = URLRequest(url: URL(string: "https://chatgpt.com/backend-api/wham/usage")!)
+        var request = URLRequest(url: Self.usageURL)
         request.httpMethod = "GET"
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
 

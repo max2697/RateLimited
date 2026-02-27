@@ -1,7 +1,6 @@
 included:
   - RateLimited
   - Tests
-  - scripts
 
 excluded:
   - RateLimited.xcodeproj

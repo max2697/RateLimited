@@ -2,15 +2,15 @@ import Foundation
 
 enum ISO8601Parser {
     private nonisolated(unsafe) static let withFractionalSeconds: ISO8601DateFormatter = {
-        let f = ISO8601DateFormatter()
-        f.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-        return f
+        let fmt = ISO8601DateFormatter()
+        fmt.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        return fmt
     }()
 
     private nonisolated(unsafe) static let withoutFractionalSeconds: ISO8601DateFormatter = {
-        let f = ISO8601DateFormatter()
-        f.formatOptions = [.withInternetDateTime]
-        return f
+        let fmt = ISO8601DateFormatter()
+        fmt.formatOptions = [.withInternetDateTime]
+        return fmt
     }()
 
     nonisolated static func parse(_ string: String) throws -> Date {
