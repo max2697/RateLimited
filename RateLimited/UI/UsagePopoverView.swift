@@ -65,6 +65,7 @@ struct UsagePopoverView: View {
     }
 }
 
+#if DEBUG
 #Preview("Usage Popover") {
     UsagePopoverView(viewModel: .previewMock())
 }
@@ -72,6 +73,7 @@ struct UsagePopoverView: View {
 #Preview("Usage Popover Errors") {
     UsagePopoverView(viewModel: .previewError())
 }
+#endif
 
 private struct ToolUsageSectionView: View {
     let title: String
