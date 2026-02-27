@@ -7,6 +7,7 @@ enum AppEnvironment {
 }
 
 enum UsageViewModelFactory {
+    @MainActor
     static func makeDefault() -> UsageViewModel {
         if AppEnvironment.useMockData() {
             return UsageViewModel(
