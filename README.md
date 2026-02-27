@@ -1,8 +1,8 @@
 # RateLimited
 
-![RateLimited Icon](docs/assets/icon-512.png)
-
 Menu bar app for macOS that shows current usage limits for Claude and Codex/OpenAI.
+
+![RateLimited screenshot](docs/assets/RateLimited.png)
 
 ## Features
 
