@@ -1,0 +1,22 @@
+// Shared target settings for all configurations.
+// Contributors can override local signing/team values in Config/Local.xcconfig.
+
+PRODUCT_NAME = $(TARGET_NAME)
+PRODUCT_BUNDLE_IDENTIFIER = net.0fn.RateLimited
+MARKETING_VERSION = 0.1.0
+CURRENT_PROJECT_VERSION = 1
+MACOSX_DEPLOYMENT_TARGET = 14.0
+
+CODE_SIGN_STYLE = Automatic
+DEVELOPMENT_TEAM =
+
+ENABLE_APP_SANDBOX = NO
+ENABLE_HARDENED_RUNTIME = YES
+ENABLE_INCOMING_NETWORK_CONNECTIONS = NO
+ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES
+
+INFOPLIST_KEY_LSApplicationCategoryType = public.app-category.utilities
+INFOPLIST_KEY_LSUIElement = YES
+
+#include? "Local.xcconfig"
+

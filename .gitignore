@@ -1,0 +1,21 @@
+.DS_Store
+*.swp
+*.swo
+
+# Xcode
+DerivedData/
+build/
+*.xcuserstate
+xcuserdata/
+
+# macOS app packaging
+*.dSYM
+*.xcarchive
+*.pkg
+*.zip
+
+# Swift Package Manager
+.build/
+
+# Local Xcode overrides
+Config/Local.xcconfig

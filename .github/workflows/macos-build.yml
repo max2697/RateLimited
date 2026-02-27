@@ -1,0 +1,37 @@
+name: macOS Build
+
+on:
+  push:
+    branches: ["main", "master"]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install SwiftFormat and SwiftLint
+        run: |
+          brew update
+          brew install swiftformat swiftlint
+
+      - name: SwiftFormat (lint)
+        run: swiftformat --lint .
+
+      - name: SwiftLint
+        run: swiftlint --strict
+
+      - name: Swift Package Tests
+        run: swift test
+
+      - name: Build
+        run: |
+          xcodebuild \
+            -project RateLimited.xcodeproj \
+            -scheme RateLimited \
+            -destination 'platform=macOS' \
+            build \
+            CODE_SIGNING_ALLOWED=NO
+

@@ -1,0 +1,12 @@
+--swiftversion 5.10
+--indent 4
+--linebreaks lf
+--wraparguments before-first
+--wrapparameters before-first
+--wrapcollections before-first
+--trimwhitespace always
+--stripunusedargs closure-only
+--commas inline
+--ifdef no-indent
+--exclude RateLimited.xcodeproj,docs
+

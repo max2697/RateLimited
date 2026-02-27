@@ -1,0 +1,4 @@
+// Copy to Config/Local.xcconfig for local machine-only overrides.
+
+DEVELOPMENT_TEAM = YOURTEAMID
+
