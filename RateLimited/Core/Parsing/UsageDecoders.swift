@@ -3,14 +3,14 @@ import Foundation
 enum ClaudeUsageDecoder {
     static func decodeSnapshot(from data: Data) throws -> ToolUsageSnapshot {
         let response = try JSONDecoder().decode(ClaudeUsageResponse.self, from: data)
-        return ToolUsageSnapshot(
+        return try ToolUsageSnapshot(
             fiveHour: UsageWindow(
                 usedPercent: response.fiveHour.utilization,
-                resetDate: try ISO8601Parser.parseIfPresent(response.fiveHour.resetsAt)
+                resetDate: ISO8601Parser.parseIfPresent(response.fiveHour.resetsAt)
             ),
             weekly: UsageWindow(
                 usedPercent: response.sevenDay.utilization,
-                resetDate: try ISO8601Parser.parseIfPresent(response.sevenDay.resetsAt)
+                resetDate: ISO8601Parser.parseIfPresent(response.sevenDay.resetsAt)
             )
         )
     }

@@ -1,13 +1,13 @@
 import Foundation
 
 enum ISO8601Parser {
-    nonisolated(unsafe) private static let withFractionalSeconds: ISO8601DateFormatter = {
+    private nonisolated(unsafe) static let withFractionalSeconds: ISO8601DateFormatter = {
         let f = ISO8601DateFormatter()
         f.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
         return f
     }()
 
-    nonisolated(unsafe) private static let withoutFractionalSeconds: ISO8601DateFormatter = {
+    private nonisolated(unsafe) static let withoutFractionalSeconds: ISO8601DateFormatter = {
         let f = ISO8601DateFormatter()
         f.formatOptions = [.withInternetDateTime]
         return f

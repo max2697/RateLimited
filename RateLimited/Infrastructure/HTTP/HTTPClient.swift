@@ -17,7 +17,7 @@ struct URLSessionHTTPClient: HTTPClient {
             throw UsageServiceError("Unexpected non-HTTP response")
         }
 
-        guard (200..<300).contains(httpResponse.statusCode) else {
+        guard (200 ..< 300).contains(httpResponse.statusCode) else {
             throw HTTPClientStatusError(statusCode: httpResponse.statusCode, responseBodyData: data)
         }
 

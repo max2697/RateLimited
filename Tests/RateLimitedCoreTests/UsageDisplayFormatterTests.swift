@@ -1,5 +1,5 @@
-import XCTest
 @testable import RateLimitedCore
+import XCTest
 
 final class UsageDisplayFormatterTests: XCTestCase {
     func testTrayLabelUsesHourlyByDefault() {
@@ -51,9 +51,8 @@ final class UsageDisplayFormatterTests: XCTestCase {
             "3h 55m"
         )
         XCTAssertEqual(
-            UsageDisplayFormatter.timeRemainingString(until: now.addingTimeInterval(4 * 86_400 + 5 * 3600), now: now),
+            UsageDisplayFormatter.timeRemainingString(until: now.addingTimeInterval(4 * 86400 + 5 * 3600), now: now),
             "4d 5h"
         )
     }
 }
-

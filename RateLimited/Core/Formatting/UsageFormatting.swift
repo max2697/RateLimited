@@ -23,9 +23,9 @@ enum UsageDisplayFormatter {
         let seconds = Int(resetDate.timeIntervalSince(now).rounded(.down))
         if seconds <= 0 { return "now" }
 
-        let days = seconds / 86_400
-        let hours = (seconds % 86_400) / 3_600
-        let minutes = (seconds % 3_600) / 60
+        let days = seconds / 86400
+        let hours = (seconds % 86400) / 3600
+        let minutes = (seconds % 3600) / 60
 
         if days > 0 {
             return hours > 0 ? "\(days)d \(hours)h" : "\(days)d"
@@ -38,4 +38,3 @@ enum UsageDisplayFormatter {
         return clampedMinutes == 1 ? "1m" : "\(clampedMinutes)m"
     }
 }
-

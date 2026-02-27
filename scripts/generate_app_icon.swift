@@ -5,7 +5,10 @@ struct IconSpec {
     let points: Int
     let scale: Int
 
-    var pixels: Int { points * scale }
+    var pixels: Int {
+        points * scale
+    }
+
     var filename: String {
         if scale == 1 {
             return "icon_\(points)x\(points).png"
@@ -24,7 +27,7 @@ let specs: [IconSpec] = [
     .init(points: 256, scale: 1),
     .init(points: 256, scale: 2),
     .init(points: 512, scale: 1),
-    .init(points: 512, scale: 2),
+    .init(points: 512, scale: 2)
 ]
 
 let fileManager = FileManager.default
@@ -57,23 +60,35 @@ func drawIcon(pixelSize: Int) -> NSImage {
     bg.draw(in: outerRect, angle: 135)
 
     let glowCenter = CGPoint(x: outerRect.maxX * 0.80, y: outerRect.maxY * 0.84)
-    let glowColors = [NSColor(calibratedRed: 0.20, green: 0.72, blue: 1.00, alpha: 0.95).cgColor,
-                      NSColor(calibratedRed: 0.20, green: 0.72, blue: 1.00, alpha: 0.00).cgColor] as CFArray
+    let glowColors = [
+        NSColor(calibratedRed: 0.20, green: 0.72, blue: 1.00, alpha: 0.95).cgColor,
+        NSColor(calibratedRed: 0.20, green: 0.72, blue: 1.00, alpha: 0.00).cgColor
+    ] as CFArray
     let colorSpace = CGColorSpaceCreateDeviceRGB()
     let glowGradient = CGGradient(colorsSpace: colorSpace, colors: glowColors, locations: [0, 1])!
-    ctx.drawRadialGradient(glowGradient,
-                           startCenter: glowCenter, startRadius: 0,
-                           endCenter: glowCenter, endRadius: CGFloat(pixelSize) * 0.62,
-                           options: [])
+    ctx.drawRadialGradient(
+        glowGradient,
+        startCenter: glowCenter,
+        startRadius: 0,
+        endCenter: glowCenter,
+        endRadius: CGFloat(pixelSize) * 0.62,
+        options: []
+    )
 
     let redCenter = CGPoint(x: outerRect.minX + CGFloat(pixelSize) * 0.20, y: outerRect.minY + CGFloat(pixelSize) * 0.20)
-    let redColors = [NSColor(calibratedRed: 1.00, green: 0.22, blue: 0.30, alpha: 0.35).cgColor,
-                     NSColor(calibratedRed: 1.00, green: 0.22, blue: 0.30, alpha: 0.00).cgColor] as CFArray
+    let redColors = [
+        NSColor(calibratedRed: 1.00, green: 0.22, blue: 0.30, alpha: 0.35).cgColor,
+        NSColor(calibratedRed: 1.00, green: 0.22, blue: 0.30, alpha: 0.00).cgColor
+    ] as CFArray
     let redGradient = CGGradient(colorsSpace: colorSpace, colors: redColors, locations: [0, 1])!
-    ctx.drawRadialGradient(redGradient,
-                           startCenter: redCenter, startRadius: 0,
-                           endCenter: redCenter, endRadius: CGFloat(pixelSize) * 0.50,
-                           options: [])
+    ctx.drawRadialGradient(
+        redGradient,
+        startCenter: redCenter,
+        startRadius: 0,
+        endCenter: redCenter,
+        endRadius: CGFloat(pixelSize) * 0.50,
+        options: []
+    )
 
     ctx.restoreGState()
 
@@ -82,9 +97,11 @@ func drawIcon(pixelSize: Int) -> NSImage {
     outerPath.stroke()
 
     let innerRect = outerRect.insetBy(dx: CGFloat(pixelSize) * 0.10, dy: CGFloat(pixelSize) * 0.12)
-    let panelPath = NSBezierPath(roundedRect: innerRect,
-                                 xRadius: CGFloat(pixelSize) * 0.13,
-                                 yRadius: CGFloat(pixelSize) * 0.13)
+    let panelPath = NSBezierPath(
+        roundedRect: innerRect,
+        xRadius: CGFloat(pixelSize) * 0.13,
+        yRadius: CGFloat(pixelSize) * 0.13
+    )
     let panelGradient = NSGradient(colors: [
         NSColor(calibratedWhite: 0.11, alpha: 0.96),
         NSColor(calibratedRed: 0.06, green: 0.09, blue: 0.14, alpha: 0.96)
@@ -130,13 +147,17 @@ func drawIcon(pixelSize: Int) -> NSImage {
 
     // Monogram badge for small-size recognition.
     let badgeSize = CGSize(width: innerRect.width * 0.34, height: innerRect.height * 0.26)
-    let badgeRect = CGRect(x: innerRect.minX + horizontalInset,
-                           y: innerRect.maxY - badgeSize.height - topInset,
-                           width: badgeSize.width,
-                           height: badgeSize.height)
-    let badge = NSBezierPath(roundedRect: badgeRect,
-                             xRadius: badgeRect.height * 0.35,
-                             yRadius: badgeRect.height * 0.35)
+    let badgeRect = CGRect(
+        x: innerRect.minX + horizontalInset,
+        y: innerRect.maxY - badgeSize.height - topInset,
+        width: badgeSize.width,
+        height: badgeSize.height
+    )
+    let badge = NSBezierPath(
+        roundedRect: badgeRect,
+        xRadius: badgeRect.height * 0.35,
+        yRadius: badgeRect.height * 0.35
+    )
     NSColor.white.withAlphaComponent(0.10).setFill()
     badge.fill()
 
@@ -197,7 +218,7 @@ for spec in specs {
     try writePNG(image, to: appIconDir.appendingPathComponent(spec.filename))
 }
 
-// README preview asset
+/// README preview asset
 let preview = drawIcon(pixelSize: 512)
 try writePNG(preview, to: docsAssetDir.appendingPathComponent("icon-512.png"))
 

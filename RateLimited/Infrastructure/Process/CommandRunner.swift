@@ -56,7 +56,7 @@ struct ProcessCommandRunner: CommandRunning {
 
         if let timeoutSeconds {
             let deadline = clock.now().addingTimeInterval(timeoutSeconds)
-            while process.isRunning && clock.now() < deadline {
+            while process.isRunning, clock.now() < deadline {
                 Thread.sleep(forTimeInterval: 0.05)
             }
             if process.isRunning {
@@ -64,7 +64,7 @@ struct ProcessCommandRunner: CommandRunning {
                 // Give SIGTERM a brief grace period, then force-kill so that
                 // waitUntilExit() below is guaranteed to return promptly.
                 let killDeadline = clock.now().addingTimeInterval(2)
-                while process.isRunning && clock.now() < killDeadline {
+                while process.isRunning, clock.now() < killDeadline {
                     Thread.sleep(forTimeInterval: 0.05)
                 }
                 if process.isRunning {

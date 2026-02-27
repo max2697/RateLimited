@@ -11,7 +11,7 @@ final class StatusBarAppDelegate: NSObject, NSApplicationDelegate {
     private var cancellables = Set<AnyCancellable>()
 
     override init() {
-        self.viewModel = UsageViewModelFactory.makeDefault()
+        viewModel = UsageViewModelFactory.makeDefault()
         super.init()
     }
 

@@ -1,5 +1,5 @@
-import XCTest
 @testable import RateLimitedCore
+import XCTest
 
 @MainActor
 final class UsageViewModelTests: XCTestCase {
@@ -144,9 +144,9 @@ private enum TestError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .failed:
-            return "failed"
+            "failed"
         case .noMoreResults:
-            return "no more results"
+            "no more results"
         }
     }
 }

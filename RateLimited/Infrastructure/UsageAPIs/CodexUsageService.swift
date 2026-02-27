@@ -19,8 +19,8 @@ struct CodexUsageService: UsageSnapshotFetching, Sendable {
     }
 
     func fetchUsage() async throws -> ToolUsageSnapshot {
-        let tokenProvider = self.tokenProvider
-        let authRefresher = self.authRefresher
+        let tokenProvider = tokenProvider
+        let authRefresher = authRefresher
 
         return try await UsageServiceSupport.fetchWithSingleAuthRetry(
             readAccessToken: {

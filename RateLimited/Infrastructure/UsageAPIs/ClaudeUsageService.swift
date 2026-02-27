@@ -16,8 +16,8 @@ struct ClaudeUsageService: UsageSnapshotFetching, Sendable {
     }
 
     func fetchUsage() async throws -> ToolUsageSnapshot {
-        let tokenProvider = self.tokenProvider
-        let authRefresher = self.authRefresher
+        let tokenProvider = tokenProvider
+        let authRefresher = authRefresher
 
         return try await UsageServiceSupport.fetchWithSingleAuthRetry(
             readAccessToken: {
@@ -30,7 +30,7 @@ struct ClaudeUsageService: UsageSnapshotFetching, Sendable {
             },
             shouldRetryAfterUnauthorized: {
                 $0.statusCode == 401 &&
-                ClaudeAuthErrorClassifier.isTokenExpiredResponseBody($0.responseBodyData)
+                    ClaudeAuthErrorClassifier.isTokenExpiredResponseBody($0.responseBodyData)
             },
             performRequest: { token in
                 try await fetchUsage(usingToken: token)

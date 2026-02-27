@@ -32,8 +32,8 @@ final class UsageViewModel: ObservableObject {
         isRefreshing = true
         defer { isRefreshing = false }
 
-        let claudeService = self.claudeService
-        let codexService = self.codexService
+        let claudeService = claudeService
+        let codexService = codexService
 
         async let claudeResult = Self.load {
             try await claudeService.fetchUsage()
@@ -56,7 +56,7 @@ final class UsageViewModel: ObservableObject {
         _ operation: @escaping @Sendable () async throws -> ToolUsageSnapshot
     ) async -> LoadResult {
         do {
-            return .success(try await operation())
+            return try await .success(operation())
         } catch {
             let message = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
             return .failure(message)
@@ -65,11 +65,11 @@ final class UsageViewModel: ObservableObject {
 
     private static func merge(previous: ToolUsageState, result: LoadResult) -> ToolUsageState {
         switch result {
-        case .success(let snapshot):
-            return ToolUsageState(snapshot: snapshot, errorMessage: nil)
-        case .failure(let errorMessage):
+        case let .success(snapshot):
+            ToolUsageState(snapshot: snapshot, errorMessage: nil)
+        case let .failure(errorMessage):
             // Preserve last known snapshot while surfacing the latest error.
-            return ToolUsageState(snapshot: previous.snapshot, errorMessage: errorMessage)
+            ToolUsageState(snapshot: previous.snapshot, errorMessage: errorMessage)
         }
     }
 

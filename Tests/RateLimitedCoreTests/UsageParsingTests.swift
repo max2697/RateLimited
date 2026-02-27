@@ -1,5 +1,5 @@
-import XCTest
 @testable import RateLimitedCore
+import XCTest
 
 final class UsageParsingTests: XCTestCase {
     func testClaudeTokenExtractor() throws {
@@ -63,7 +63,7 @@ final class UsageParsingTests: XCTestCase {
 
         XCTAssertEqual(snapshot.fiveHour.usedPercent, 9)
         XCTAssertEqual(snapshot.weekly.usedPercent, 48)
-        XCTAssertEqual(snapshot.fiveHour.resetDate, now.addingTimeInterval(14_400))
+        XCTAssertEqual(snapshot.fiveHour.resetDate, now.addingTimeInterval(14400))
     }
 
     func testCodexUsageDecoderAllowsNullResetTime() throws {

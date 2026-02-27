@@ -30,7 +30,7 @@ struct CLIAuthRefresher: Sendable {
             home.appendingPathComponent(".claude/local/\(name)"),
             URL(fileURLWithPath: "/opt/homebrew/bin/\(name)"),
             URL(fileURLWithPath: "/usr/local/bin/\(name)"),
-            URL(fileURLWithPath: "/usr/bin/\(name)"),
+            URL(fileURLWithPath: "/usr/bin/\(name)")
         ]
         return candidates.first { access($0.path, X_OK) == 0 }
     }
@@ -44,7 +44,7 @@ struct ClaudeTokenProvider: AccessTokenProviding, Sendable {
     }
 
     nonisolated func readAccessToken() async throws -> String {
-        let commandRunner = self.commandRunner
+        let commandRunner = commandRunner
 
         return try await Task.detached(priority: .userInitiated) {
             let output = try commandRunner.run(
@@ -84,7 +84,7 @@ struct CodexTokenProvider: AccessTokenProviding, Sendable {
     }
 
     nonisolated func readAccessToken() async throws -> String {
-        let authFileURL = self.authFileURL
+        let authFileURL = authFileURL
 
         return try await Task.detached(priority: .userInitiated) {
             let data = try Data(contentsOf: authFileURL)

@@ -7,5 +7,7 @@ struct UsageServiceError: LocalizedError, Sendable {
         self.message = message
     }
 
-    var errorDescription: String? { message }
+    var errorDescription: String? {
+        message
+    }
 }

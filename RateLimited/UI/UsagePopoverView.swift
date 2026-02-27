@@ -148,11 +148,11 @@ private struct UsageBarRow: View {
     private var tintColor: Color {
         switch window.usedPercent {
         case 90...:
-            return .red
+            .red
         case 75...:
-            return .orange
+            .orange
         default:
-            return .blue
+            .blue
         }
     }
 }
