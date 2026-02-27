@@ -52,3 +52,9 @@ A plain `build` uses Debug config and will not catch Release-only failures.
 | `Release Artifact` | push tag `v*` | xcodebuild archive (Release), zip app, attach to GitHub Release |
 
 SwiftLint runs with `--strict`: all warnings become errors.
+
+## Homebrew Cask Rules
+
+- **Do not use `quarantine false`** in cask files — it is not a valid Homebrew Cask directive. Users must pass `--no-quarantine` on the command line when installing unsigned apps.
+- Install command for unsigned apps: `brew install --cask --no-quarantine max2697/tap/<cask-name>`
+- After updating a cask version, always update `sha256` with: `curl -fsSL <zip-url> | shasum -a 256`
