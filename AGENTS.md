@@ -55,6 +55,8 @@ SwiftLint runs with `--strict`: all warnings become errors.
 
 ## Homebrew Cask Rules
 
-- **Do not use `quarantine false`** in cask files — it is not a valid Homebrew Cask directive. Users must pass `--no-quarantine` on the command line when installing unsigned apps.
-- Install command for unsigned apps: `brew install --cask --no-quarantine max2697/tap/<cask-name>`
+- **Do not use `quarantine false`** in cask files — it is not a valid Homebrew Cask directive.
+- **Do not use `--no-quarantine`** — it is deprecated in Homebrew with no replacement.
+- For unsigned apps, users must clear quarantine manually after install: `xattr -d com.apple.quarantine /Applications/<AppName>.app`
+- Install command: `brew install --cask max2697/tap/<cask-name>` followed by the `xattr` command above.
 - After updating a cask version, always update `sha256` with: `curl -fsSL <zip-url> | shasum -a 256`

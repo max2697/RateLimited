@@ -3,10 +3,14 @@
 ## Option 1: Homebrew (Recommended)
 
 ```bash
-brew install --cask --no-quarantine max2697/tap/ratelimited
+brew install --cask max2697/tap/ratelimited
 ```
 
-`--no-quarantine` is required because the app is unsigned — without it macOS will block the app on first launch.
+Launch from Spotlight or `/Applications`. The app may just open, or macOS may block it on first launch depending on your Gatekeeper settings.
+
+**If blocked (optional step)**, either:
+- Go to `System Settings` → `Privacy & Security` → `Open Anyway`
+- Or run: `xattr -d com.apple.quarantine /Applications/RateLimited.app`
 
 ---
 
@@ -16,8 +20,7 @@ brew install --cask --no-quarantine max2697/tap/ratelimited
 curl -fsSL https://raw.githubusercontent.com/max2697/RateLimited/main/scripts/install.sh | bash
 ```
 
-Downloads the latest release from GitHub and installs to `/Applications`.
-Also removes the quarantine attribute so macOS does not block the unsigned app.
+Downloads the latest release from GitHub, installs to `/Applications`, and removes the quarantine flag automatically — no Gatekeeper prompt.
 
 ---
 
@@ -25,18 +28,7 @@ Also removes the quarantine attribute so macOS does not block the unsigned app.
 
 1. Download the latest `RateLimited.app.zip` from the [Releases page](https://github.com/max2697/RateLimited/releases).
 2. Unzip and move `RateLimited.app` to `/Applications`.
-3. Remove the quarantine flag to avoid Gatekeeper prompts:
-   ```bash
-   xattr -d com.apple.quarantine /Applications/RateLimited.app
-   ```
-4. Launch the app.
-
-If you prefer not to run the command above, you can clear the app manually:
-
-1. Try opening the app from Finder — macOS will block it.
-2. Open `System Settings` → `Privacy & Security`.
-3. Click `Open Anyway` for RateLimited.
-4. Confirm and relaunch.
+3. Launch the app. If Gatekeeper blocks it, go to `System Settings` → `Privacy & Security` → `Open Anyway`.
 
 ---
 

@@ -18,7 +18,7 @@ Menu bar app for macOS that shows current usage limits for Claude and Codex/Open
 
 **Homebrew** (recommended):
 ```bash
-brew install --cask --no-quarantine max2697/tap/ratelimited
+brew install --cask max2697/tap/ratelimited
 ```
 
 **curl**:
@@ -26,12 +26,12 @@ brew install --cask --no-quarantine max2697/tap/ratelimited
 curl -fsSL https://raw.githubusercontent.com/max2697/RateLimited/main/scripts/install.sh | bash
 ```
 
-**Manual**: download `RateLimited.app.zip` from [Releases](https://github.com/max2697/RateLimited/releases), unzip, move to `/Applications`, then run:
+**Manual**: download `RateLimited.app.zip` from [Releases](https://github.com/max2697/RateLimited/releases), unzip, move to `/Applications`.
+
+The app is unsigned — it may just work, or macOS may block it on first launch. If blocked, go to `System Settings` → `Privacy & Security` → `Open Anyway`, or run:
 ```bash
 xattr -d com.apple.quarantine /Applications/RateLimited.app
 ```
-
-The app is unsigned — the `xattr` command (or Homebrew/curl installers) removes the Gatekeeper quarantine flag so macOS lets it run.
 
 Detailed steps: [`docs/INSTALL.md`](docs/INSTALL.md)
 

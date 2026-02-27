@@ -10,10 +10,11 @@ RateLimited is a GUI macOS app distributed via a Homebrew Cask.
 Install command for users:
 
 ```bash
-brew install --cask --no-quarantine max2697/tap/ratelimited
+brew install --cask max2697/tap/ratelimited
+xattr -d com.apple.quarantine /Applications/RateLimited.app
 ```
 
-`--no-quarantine` is required because the app is unsigned. Without it macOS will block the app on first launch.
+The app is unsigned. Homebrew's `--no-quarantine` flag is deprecated with no replacement, so users must clear the quarantine attribute manually after install.
 
 ## Why a Shared Tap
 
