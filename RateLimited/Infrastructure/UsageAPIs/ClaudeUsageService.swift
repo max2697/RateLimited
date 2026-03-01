@@ -7,7 +7,7 @@ struct ClaudeUsageService: UsageSnapshotFetching, Sendable {
 
     init(
         tokenProvider: any AccessTokenProviding = ClaudeTokenProvider(),
-        authRefresher: CLIAuthRefresher = CLIAuthRefresher(command: ["claude", "auth", "status"]),
+        authRefresher: CLIAuthRefresher = CLIAuthRefresher(command: ["claude", "-p", "hi"]),
         httpClient: any HTTPClient = URLSessionHTTPClient()
     ) {
         self.tokenProvider = tokenProvider
