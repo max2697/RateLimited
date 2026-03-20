@@ -1,7 +1,7 @@
 import Darwin
 import Foundation
 
-struct CommandOutput: Sendable {
+struct CommandOutput {
     let terminationStatus: Int32
     let stdoutData: Data
     let stderrData: Data

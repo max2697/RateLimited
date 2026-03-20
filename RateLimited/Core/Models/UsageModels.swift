@@ -1,6 +1,6 @@
 import Foundation
 
-struct UsageWindow: Sendable {
+struct UsageWindow {
     let usedPercent: Double
     let resetDate: Date?
 
@@ -10,12 +10,12 @@ struct UsageWindow: Sendable {
     }
 }
 
-struct ToolUsageSnapshot: Sendable {
+struct ToolUsageSnapshot {
     let fiveHour: UsageWindow
     let weekly: UsageWindow
 }
 
-struct ToolUsageState: Sendable {
+struct ToolUsageState {
     let snapshot: ToolUsageSnapshot?
     let errorMessage: String?
 

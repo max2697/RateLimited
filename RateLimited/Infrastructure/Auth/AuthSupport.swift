@@ -11,7 +11,7 @@ extension AccessTokenProviding {
     }
 }
 
-struct CLIAuthRefresher: Sendable {
+struct CLIAuthRefresher {
     private let command: [String]
     private let commandRunner: any CommandRunning
 
@@ -62,7 +62,7 @@ struct CLIAuthRefresher: Sendable {
     }
 }
 
-struct ClaudeTokenProvider: AccessTokenProviding, Sendable {
+struct ClaudeTokenProvider: AccessTokenProviding {
     private let commandRunner: any CommandRunning
 
     init(commandRunner: any CommandRunning = ProcessCommandRunner()) {
@@ -108,7 +108,7 @@ struct ClaudeTokenProvider: AccessTokenProviding, Sendable {
     }
 }
 
-struct CodexTokenProvider: AccessTokenProviding, Sendable {
+struct CodexTokenProvider: AccessTokenProviding {
     private let authFileURL: URL
 
     init(

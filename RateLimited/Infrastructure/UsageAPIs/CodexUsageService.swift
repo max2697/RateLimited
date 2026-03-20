@@ -1,6 +1,6 @@
 import Foundation
 
-struct CodexUsageService: UsageSnapshotFetching, Sendable {
+struct CodexUsageService: UsageSnapshotFetching {
     private let tokenProvider: any AccessTokenProviding
     private let authRefresher: CLIAuthRefresher
     private let httpClient: any HTTPClient

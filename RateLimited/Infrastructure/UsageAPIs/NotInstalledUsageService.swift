@@ -1,6 +1,6 @@
 import Foundation
 
-struct NotInstalledUsageService: UsageSnapshotFetching, Sendable {
+struct NotInstalledUsageService: UsageSnapshotFetching {
     let toolName: String
 
     func fetchUsage() async throws -> ToolUsageSnapshot {

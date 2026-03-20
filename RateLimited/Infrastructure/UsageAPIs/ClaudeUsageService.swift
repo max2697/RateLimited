@@ -1,6 +1,6 @@
 import Foundation
 
-struct ClaudeUsageService: UsageSnapshotFetching, Sendable {
+struct ClaudeUsageService: UsageSnapshotFetching {
     private let tokenProvider: any AccessTokenProviding
     private let authRefresher: CLIAuthRefresher
     private let httpClient: any HTTPClient

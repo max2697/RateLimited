@@ -25,7 +25,7 @@ struct URLSessionHTTPClient: HTTPClient {
     }
 }
 
-struct HTTPClientStatusError: LocalizedError, Sendable {
+struct HTTPClientStatusError: LocalizedError {
     let statusCode: Int
     let responseBodyData: Data
 

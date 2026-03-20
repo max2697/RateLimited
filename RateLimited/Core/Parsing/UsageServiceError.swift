@@ -1,6 +1,6 @@
 import Foundation
 
-struct UsageServiceError: LocalizedError, Sendable {
+struct UsageServiceError: LocalizedError {
     let message: String
 
     init(_ message: String) {
