@@ -88,3 +88,4 @@ SwiftLint runs with `--strict`: all warnings become errors.
 - For unsigned apps, users must clear quarantine manually after install: `xattr -d com.apple.quarantine /Applications/<AppName>.app`
 - Install command: `brew install --cask max2697/tap/<cask-name>` followed by the `xattr` command above.
 - After updating a cask version, always update `sha256` with: `curl -fsSL <zip-url> | shasum -a 256`
+- **Do not use `auto_updates true`** — the app has no built-in updater, so this flag silently prevents `brew upgrade` from working.
