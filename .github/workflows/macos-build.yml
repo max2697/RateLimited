@@ -14,8 +14,9 @@ jobs:
 
       - name: Install SwiftFormat and SwiftLint
         run: |
-          brew update
           brew install swiftformat swiftlint
+          echo "SwiftFormat $(swiftformat --version)"
+          echo "SwiftLint $(swiftlint version)"
 
       - name: SwiftFormat (lint)
         run: swiftformat --lint .

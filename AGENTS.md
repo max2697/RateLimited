@@ -17,41 +17,33 @@ swiftlint --strict
 swift test
 ```
 
-If swiftformat or swiftlint are not installed:
+If swiftformat or swiftlint are not installed or outdated:
 
 ```bash
-brew install swiftformat swiftlint
+brew install swiftformat swiftlint   # install
+brew upgrade swiftformat swiftlint   # or upgrade to latest
 ```
+
+CI always installs the latest version via Homebrew. Keep local tools up to date
+so rules do not diverge. If CI fails on a lint rule that passes locally, run
+`brew upgrade swiftformat swiftlint` and re-check.
 
 ## Releasing a New Version
 
-When the user says "release X.Y.Z" or "bump version to X.Y.Z", do all of the following in order:
+When the user says "release X.Y.Z" or "bump version to X.Y.Z":
 
-1. **Update `MARKETING_VERSION`** in two places:
-   - `Config/Base.xcconfig`: `MARKETING_VERSION = X.Y.Z`
-   - `RateLimited.xcodeproj/project.pbxproj`: both occurrences of `MARKETING_VERSION` (the project file overrides the xcconfig if left stale)
-
-2. **Add a CHANGELOG entry** at the top of `CHANGELOG.md`:
+1. **Add a CHANGELOG entry** at the top of `CHANGELOG.md` if one does not already exist:
    ```
-   ## X.Y.Z – YYYY-MM-DD
+   ## [X.Y.Z] - YYYY-MM-DD
    - <summary of changes since last release>
    ```
 
-3. **Run the pre-commit checks** (see *Before Every Commit* below) and fix any failures.
-
-4. **Ask the user for approval before committing.** Show the list of changed files and the intended commit message, then wait for explicit confirmation.
-
-5. **Commit** all changes with message `Release X.Y.Z` (no Co-Authored-By line).
-
-6. **Tag** the commit:
+2. **Ask the user for approval**, then run the release script — it handles everything else (version bump, lint, tests, release build, commit, tag, push):
    ```bash
-   git tag vX.Y.Z
-   git push origin main --tags
+   scripts/release.sh X.Y.Z
    ```
-   The `v*` tag triggers the CI release artifact workflow.
 
-7. **Update the Homebrew cask** (if applicable):
-   - Wait for the GitHub Release artifact to be attached by CI
+3. **Update the Homebrew cask** once CI attaches the artifact to the GitHub Release:
    - Update the version and `sha256` in the cask file (see *Homebrew Cask Rules* below)
 
 ## Before Tagging a Release
