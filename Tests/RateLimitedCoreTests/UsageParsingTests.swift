@@ -7,6 +7,19 @@ final class UsageParsingTests: XCTestCase {
         XCTAssertEqual(try ClaudeTokenExtractor.extractAccessToken(fromKeychainSecretData: data), "abc123")
     }
 
+    func testClaudeTokenExtractorExtractsExpiry() {
+        let data = Data(#"{"claudeAiOauth":{"accessToken":"abc123","expiresAt":1000000000000}}"#.utf8)
+        XCTAssertEqual(
+            ClaudeTokenExtractor.extractTokenExpiry(fromKeychainSecretData: data),
+            Date(timeIntervalSince1970: 1_000_000_000)
+        )
+    }
+
+    func testClaudeTokenExtractorReturnsNilExpiryWhenMissing() {
+        let data = Data(#"{"claudeAiOauth":{"accessToken":"abc123"}}"#.utf8)
+        XCTAssertNil(ClaudeTokenExtractor.extractTokenExpiry(fromKeychainSecretData: data))
+    }
+
     func testCodexTokenExtractor() throws {
         let data = Data(#"{"tokens":{"access_token":"xyz789"}}"#.utf8)
         XCTAssertEqual(try CodexTokenExtractor.extractAccessToken(fromAuthJSONData: data), "xyz789")

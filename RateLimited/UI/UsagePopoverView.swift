@@ -7,8 +7,8 @@ struct UsagePopoverView: View {
         VStack(alignment: .leading, spacing: 14) {
             header
 
-            ToolUsageSectionView(title: "Codex", state: viewModel.codexState)
-            ToolUsageSectionView(title: "Claude", state: viewModel.claudeState)
+            ToolUsageSectionView(title: "Codex", version: viewModel.codexCLIVersion, state: viewModel.codexState)
+            ToolUsageSectionView(title: "Claude", version: viewModel.claudeCLIVersion, state: viewModel.claudeState)
 
             Divider()
 
@@ -40,7 +40,7 @@ struct UsagePopoverView: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text("RateLimited")
                     .font(.headline)
-                Text("AI usage limits")
+                Text("AI usage limits\(Bundle.main.appVersion.map { " · v\($0)" } ?? "")")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
@@ -77,12 +77,20 @@ struct UsagePopoverView: View {
 
 private struct ToolUsageSectionView: View {
     let title: String
+    let version: String?
     let state: ToolUsageState
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(title)
-                .font(.title3.weight(.semibold))
+            HStack(alignment: .firstTextBaseline, spacing: 6) {
+                Text(title)
+                    .font(.title3.weight(.semibold))
+                if let version {
+                    Text("v\(version)")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+            }
 
             if let snapshot = state.snapshot {
                 UsageBarRow(title: "5-hour", window: snapshot.fiveHour)

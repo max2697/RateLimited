@@ -12,6 +12,8 @@ final class UsageViewModel: ObservableObject {
     @Published private(set) var menuBarTitle: String = "--"
     @Published private(set) var isRefreshing = false
     @Published private(set) var lastUpdated: Date?
+    @Published private(set) var claudeCLIVersion: String?
+    @Published private(set) var codexCLIVersion: String?
 
     private let claudeService: any UsageSnapshotFetching
     private let codexService: any UsageSnapshotFetching
@@ -71,6 +73,11 @@ final class UsageViewModel: ObservableObject {
             // Preserve last known snapshot while surfacing the latest error.
             ToolUsageState(snapshot: previous.snapshot, errorMessage: errorMessage)
         }
+    }
+
+    func setCLIVersions(claude: String?, codex: String?) {
+        claudeCLIVersion = claude
+        codexCLIVersion = codex
     }
 
     private enum LoadResult {

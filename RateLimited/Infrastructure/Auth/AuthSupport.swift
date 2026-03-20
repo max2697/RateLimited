@@ -2,6 +2,13 @@ import Foundation
 
 protocol AccessTokenProviding: Sendable {
     nonisolated func readAccessToken() async throws -> String
+    nonisolated func readTokenExpiry() async -> Date?
+}
+
+extension AccessTokenProviding {
+    nonisolated func readTokenExpiry() async -> Date? {
+        nil
+    }
 }
 
 struct CLIAuthRefresher: Sendable {
@@ -23,7 +30,26 @@ struct CLIAuthRefresher: Sendable {
         )
     }
 
-    private nonisolated static func resolveExecutable(_ name: String) -> URL? {
+    nonisolated static func isInstalled(_ name: String) -> Bool {
+        resolveExecutable(name) != nil
+    }
+
+    nonisolated static func readVersion(
+        of name: String,
+        commandRunner: any CommandRunning = ProcessCommandRunner()
+    ) -> String? {
+        guard let url = resolveExecutable(name),
+              let output = try? commandRunner.run(executableURL: url, arguments: ["--version"], timeoutSeconds: 5),
+              output.terminationStatus == 0
+        else { return nil }
+        let text = String(data: output.stdoutData, encoding: .utf8)?
+            .trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        // Extract the first whitespace-separated token that starts with a digit,
+        // e.g. "2.1.80 (Claude Code)" → "2.1.80", "codex-cli 0.106.0" → "0.106.0"
+        return text.components(separatedBy: .whitespaces).first { $0.first?.isNumber == true }
+    }
+
+    nonisolated static func resolveExecutable(_ name: String) -> URL? {
         let home = URL(fileURLWithPath: NSHomeDirectory())
         let candidates = [
             home.appendingPathComponent(".local/bin/\(name)"),
@@ -44,6 +70,16 @@ struct ClaudeTokenProvider: AccessTokenProviding, Sendable {
     }
 
     nonisolated func readAccessToken() async throws -> String {
+        let data = try await readKeychainData()
+        return try ClaudeTokenExtractor.extractAccessToken(fromKeychainSecretData: data)
+    }
+
+    nonisolated func readTokenExpiry() async -> Date? {
+        guard let data = try? await readKeychainData() else { return nil }
+        return ClaudeTokenExtractor.extractTokenExpiry(fromKeychainSecretData: data)
+    }
+
+    private nonisolated func readKeychainData() async throws -> Data {
         let commandRunner = commandRunner
 
         return try await Task.detached(priority: .userInitiated) {
@@ -67,7 +103,7 @@ struct ClaudeTokenProvider: AccessTokenProviding, Sendable {
                 throw UsageServiceError("Claude token lookup returned an empty secret")
             }
 
-            return try ClaudeTokenExtractor.extractAccessToken(fromKeychainSecretData: Data(rawSecret.utf8))
+            return Data(rawSecret.utf8)
         }.value
     }
 }

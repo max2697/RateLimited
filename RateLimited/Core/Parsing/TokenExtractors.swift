@@ -12,6 +12,15 @@ enum ClaudeTokenExtractor {
         }
         return token
     }
+
+    nonisolated static func extractTokenExpiry(fromKeychainSecretData data: Data) -> Date? {
+        guard
+            let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+            let oauth = object["claudeAiOauth"] as? [String: Any],
+            let ms = oauth["expiresAt"] as? Double
+        else { return nil }
+        return Date(timeIntervalSince1970: ms / 1000)
+    }
 }
 
 enum CodexTokenExtractor {

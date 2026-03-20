@@ -1,5 +1,11 @@
 import Foundation
 
+extension Bundle {
+    var appVersion: String? {
+        infoDictionary?["CFBundleShortVersionString"] as? String
+    }
+}
+
 enum AppEnvironment {
     static func useMockData(_ env: [String: String] = ProcessInfo.processInfo.environment) -> Bool {
         env["RATELIMITED_USE_MOCK_DATA"] == "1"
@@ -16,9 +22,14 @@ enum UsageViewModelFactory {
             )
         }
 
-        return UsageViewModel(
-            claudeService: ClaudeUsageService(),
-            codexService: CodexUsageService()
-        )
+        let claudeService: any UsageSnapshotFetching = CLIAuthRefresher.isInstalled("claude")
+            ? ClaudeUsageService()
+            : NotInstalledUsageService(toolName: "claude")
+
+        let codexService: any UsageSnapshotFetching = CLIAuthRefresher.isInstalled("codex")
+            ? CodexUsageService()
+            : NotInstalledUsageService(toolName: "codex")
+
+        return UsageViewModel(claudeService: claudeService, codexService: codexService)
     }
 }

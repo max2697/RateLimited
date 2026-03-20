@@ -19,6 +19,13 @@ struct ClaudeUsageService: UsageSnapshotFetching, Sendable {
         let tokenProvider = tokenProvider
         let authRefresher = authRefresher
 
+        // Proactively refresh if the token is already expired so we skip an unnecessary API round-trip.
+        if let expiry = await tokenProvider.readTokenExpiry(), expiry <= Date() {
+            await Task.detached(priority: .utility) {
+                authRefresher.refreshBestEffort()
+            }.value
+        }
+
         return try await UsageServiceSupport.fetchWithSingleAuthRetry(
             readAccessToken: {
                 try await tokenProvider.readAccessToken()
@@ -28,10 +35,7 @@ struct ClaudeUsageService: UsageSnapshotFetching, Sendable {
                     authRefresher.refreshBestEffort()
                 }.value
             },
-            shouldRetryAfterUnauthorized: {
-                $0.statusCode == 401 &&
-                    ClaudeAuthErrorClassifier.isTokenExpiredResponseBody($0.responseBodyData)
-            },
+            shouldRetryAfterUnauthorized: { $0.statusCode == 401 },
             performRequest: { token in
                 try await fetchUsage(usingToken: token)
             }

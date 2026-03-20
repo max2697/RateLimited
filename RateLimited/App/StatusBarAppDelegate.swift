@@ -26,6 +26,12 @@ final class StatusBarAppDelegate: NSObject, NSApplicationDelegate {
         Task {
             await refreshUsage()
         }
+
+        Task.detached(priority: .utility) { [viewModel = self.viewModel] in
+            let claudeVersion = CLIAuthRefresher.readVersion(of: "claude")
+            let codexVersion = CLIAuthRefresher.readVersion(of: "codex")
+            await viewModel.setCLIVersions(claude: claudeVersion, codex: codexVersion)
+        }
     }
 
     func applicationWillTerminate(_ notification: Notification) {

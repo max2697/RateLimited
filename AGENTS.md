@@ -2,6 +2,11 @@
 
 Rules for AI agents (and humans) working on this repo. Follow these to avoid breaking CI.
 
+## Commits
+
+- **Always ask the user for approval before committing.** Show what files will be included and the intended message, then wait for a yes.
+- **Do not add `Co-Authored-By` lines** to commit messages.
+
 ## Before Every Commit
 
 Run this exact sequence and fix all failures before committing:
@@ -17,6 +22,37 @@ If swiftformat or swiftlint are not installed:
 ```bash
 brew install swiftformat swiftlint
 ```
+
+## Releasing a New Version
+
+When the user says "release X.Y.Z" or "bump version to X.Y.Z", do all of the following in order:
+
+1. **Update `MARKETING_VERSION`** in two places:
+   - `Config/Base.xcconfig`: `MARKETING_VERSION = X.Y.Z`
+   - `RateLimited.xcodeproj/project.pbxproj`: both occurrences of `MARKETING_VERSION` (the project file overrides the xcconfig if left stale)
+
+2. **Add a CHANGELOG entry** at the top of `CHANGELOG.md`:
+   ```
+   ## X.Y.Z – YYYY-MM-DD
+   - <summary of changes since last release>
+   ```
+
+3. **Run the pre-commit checks** (see *Before Every Commit* below) and fix any failures.
+
+4. **Ask the user for approval before committing.** Show the list of changed files and the intended commit message, then wait for explicit confirmation.
+
+5. **Commit** all changes with message `Release X.Y.Z` (no Co-Authored-By line).
+
+6. **Tag** the commit:
+   ```bash
+   git tag vX.Y.Z
+   git push origin main --tags
+   ```
+   The `v*` tag triggers the CI release artifact workflow.
+
+7. **Update the Homebrew cask** (if applicable):
+   - Wait for the GitHub Release artifact to be attached by CI
+   - Update the version and `sha256` in the cask file (see *Homebrew Cask Rules* below)
 
 ## Before Tagging a Release
 

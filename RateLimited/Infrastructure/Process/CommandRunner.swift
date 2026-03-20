@@ -14,7 +14,7 @@ protocol CommandRunning: Sendable {
 struct ProcessCommandRunner: CommandRunning {
     private let clock: any Clock
 
-    init(clock: any Clock = SystemClock()) {
+    nonisolated init(clock: any Clock = SystemClock()) {
         self.clock = clock
     }
 
