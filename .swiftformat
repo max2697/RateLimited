@@ -1,5 +1,4 @@
 --swiftversion 5.10
---enable redundantSendable
 --indent 4
 --linebreaks lf
 --wraparguments before-first
