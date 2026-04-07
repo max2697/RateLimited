@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on Keep a Changelog.
 
+## [0.2.1] - 2026-04-07
+
+### Fixed
+
+- Subprocess CWD set to `/tmp` so `claude -p` token refresh no longer triggers macOS TCC prompts for Downloads and other protected folders
+
 ## [0.2.0] - 2026-03-20
 
 ### Added

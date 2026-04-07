@@ -26,6 +26,7 @@ struct ProcessCommandRunner: CommandRunning {
         let process = Process()
         process.executableURL = executableURL
         process.arguments = arguments
+        process.currentDirectoryURL = URL(fileURLWithPath: "/tmp")
 
         let stdout = Pipe()
         let stderr = Pipe()
